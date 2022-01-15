@@ -1,5 +1,4 @@
 import CodeCell from './CodeCell/CodeCell'
-import 'bulmaswatch/superhero/bulmaswatch.min.css'
 
 const App = () => {
 	return (

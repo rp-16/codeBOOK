@@ -1,11 +1,15 @@
 import { useEffect, useRef } from 'react'
+import { PreviewOutput } from './CodeCell'
 import './Preview.css'
 
 interface PreviewProps {
-	code: string
+	output: PreviewOutput
 }
 
-const html = `
+const Preview: React.FC<PreviewProps> = ({ output }) => {
+	const iframeRef = useRef<any>()
+
+	const html = `
 	<html>
 	  <head>
       <style>html { background-color: white }</style>
@@ -13,29 +17,39 @@ const html = `
 	  <body>
 	    <div id="root"></div>
 	    <script>
+        const handleError = (error, type) => {
+          const root = document.querySelector('#root')
+          root.innerHTML = '<div style="color: red;"><h4>' + type + ' Error!</h4>' + error + '</div>'
+          console.error(error)
+        }
+
 	      window.addEventListener('message', (event) => {
-	          try{
-	            eval(event.data)
-	          } catch(error) {
-	            const root = document.querySelector('#root')
-	            root.innerHTML = '<div style="color: red;"><h4>Runtime Error!</h4>' + error + '</div>'
-	            console.error(error)
-	          }
-	        }, false)
+          const { code, error } = event.data
+          try{
+            if(error){
+              handleError(error, 'Build')
+              return
+            }
+            eval(code)
+          } catch(error) {
+            handleError(error, 'Runtime');
+          }
+        }, false)
+
+        window.addEventListener('error', (event) => {
+          event.preventDefault()
+          handleError(event.error, 'Runtime')
+        })
 	    </script>
 	  </body>
 	</html>
 	`
-
-const Preview: React.FC<PreviewProps> = ({ code }) => {
-	const iframeRef = useRef<any>()
-
 	useEffect(() => {
 		iframeRef.current.srcdoc = html
 		setTimeout(() => {
-			iframeRef.current.contentWindow.postMessage(code, '*')
+			iframeRef.current.contentWindow.postMessage(output, '*')
 		}, 50)
-	}, [code])
+	}, [html, output])
 
 	return (
 		<div className="Preview">
