@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import MonacoEditor, { OnChange, OnMount } from '@monaco-editor/react'
 import prettier from 'prettier'
 import parser from 'prettier/parser-babel'
-import './Editor.css'
+import './CodeEditor.css'
 
 interface EditorProps {
 	initialValue: string

@@ -1,0 +1,128 @@
+/* EDITOR DRAG HANDLE */
+.MarkdownEditor .w-md-editor-bar svg {
+	display: none;
+}
+
+.MarkdownEditor .w-md-editor-bar {
+	/* position: relative; */
+	width: 100%;
+	height: 11px;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
+	background-color: #37414b;
+	background-repeat: no-repeat;
+	background-position: 50%;
+	cursor: row-resize;
+}
+
+/* EDITOR CARET COLOR */
+.MarkdownEditor {
+	caret-color: #afb1b4;
+}
+
+/* EDITOR TOOLBAR COLOR */
+.MarkdownEditor .w-md-editor-toolbar {
+	background-color: #37414b;
+	border-bottom: 1px solid gray;
+}
+
+.MarkdownEditor .w-md-editor-toolbar li button {
+	color: #d4d4d4;
+}
+
+.MarkdownEditor .w-md-editor-toolbar li:hover > * {
+	/* .MarkdownEditor .w-md-editor-toolbar li button:hover { */
+	color: #333;
+	background-color: #e3e7e9;
+}
+
+.MarkdownEditor .w-md-editor-toolbar li.active button {
+	color: #3245f5;
+	background-color: #e3e7e9;
+}
+
+/* EDITOR INPUT AREA */
+.MarkdownEditor .w-md-editor-content {
+	background-color: #202123;
+}
+
+.MarkdownEditor .w-md-editor-text pre code,
+.MarkdownEditor .w-md-editor-text pre code > * {
+	color: #e3e7e9 !important;
+}
+
+.MarkdownEditor .token.list.punctuation {
+	background-color: unset;
+}
+
+.MarkdownEditor .w-md-editor-text-pre .code.keyword {
+	color: #768bef !important;
+}
+
+.MarkdownEditor .w-md-editor-text-pre .token.url {
+	background: none !important;
+	/* color: #4674a8 !important; */
+}
+
+.MarkdownEditor .w-md-editor-text-pre .token.url .token.content {
+	color: #4674a8;
+}
+
+.MarkdownEditor .w-md-editor-text-pre .token.url .url {
+	color: #0366d6 !important;
+	text-decoration: underline;
+}
+/* .MarkdownEditor .w-md-editor-text-pre .url {
+	color: #4674a8 !important;
+} */
+
+/* EDITOR DIVIDER LINE */
+.w-md-editor-preview {
+	box-shadow: inset 1px 0 0 0 #535357;
+}
+
+/* EDITOR PREVIEW WINDOW */
+.MarkdownEditor .wmde-markdown > * {
+	color: #e3e7e9;
+}
+
+.MarkdownEditor .wmde-markdown h1,
+.MarkdownEditor .wmde-markdown h2 {
+	border-bottom: 1px solid #7d7f8a;
+}
+
+.MarkdownEditor .wmde-markdown code {
+	color: #e3e7e9;
+	background-color: rgba(66, 62, 62, 0.78);
+	display: block;
+	padding: 0.5em;
+	margin: 0.5em 0;
+	overflow-x: auto;
+	tab-size: 4;
+}
+
+.MarkdownEditor .wmde-markdown blockquote {
+	border-left: 0.25em solid #afb1b4;
+}
+
+/* .MarkdownEditor .w-md-editor-text pre .bold {
+	color: unset !important;
+}
+*/
+
+/* .MarkdownEditor em {
+	font-style: italic;
+	color: red;
+} */
+
+/* .MarkdownEditor .wmde-markdown hr {
+	border-top: 1px solid #dee5ed;
+}
+
+.MarkdownEditor .wmde-markdown ol {
+	list-style: decimal;
+} */
+
+.MarkdownEditor .w-md-editor-show-live {
+	/* Hide menu bar buttons to prevent accidental delete */
+	z-index: 20;
+}

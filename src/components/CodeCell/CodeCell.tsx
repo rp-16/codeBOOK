@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react'
-import Editor from './Editor'
+import Editor from './CodeEditor'
 import Preview from './Preview'
 import Resizable from '../Resizable'
 import bundler from '../../utils/bundler/bundler'
-import 'bulmaswatch/superhero/bulmaswatch.min.css'
+
+export interface PreviewOutput {
+	code: string
+	error: string
+}
 
 const CodeCell = () => {
 	const [input, setInput] = useState('')
-	const [code, setCode] = useState('')
+	const [previewInput, setPreviewInput] = useState<PreviewOutput>({ code: '', error: '' })
 
 	useEffect(() => {
 		const timer = setTimeout(async () => {
-			const output = await bundler(input)
-			console.log('output-', output)
-			setCode(output)
+			const bundlerOutput = await bundler(input)
+			console.log(bundlerOutput)
+			setPreviewInput(bundlerOutput as PreviewOutput)
 		}, 1000)
 
 		return () => {
@@ -31,7 +35,7 @@ const CodeCell = () => {
 					/>
 				</Resizable>
 				{/* <button onClick={submitHandler}>Submit</button> */}
-				<Preview code={code} />
+				<Preview output={previewInput} />
 			</div>
 		</Resizable>
 	)

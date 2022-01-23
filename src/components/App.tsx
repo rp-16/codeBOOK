@@ -1,10 +1,11 @@
-import CodeCell from './CodeCell/CodeCell'
-import 'bulmaswatch/superhero/bulmaswatch.min.css'
+// import CodeCell from './CodeCell/CodeCell'
+import MarkdownEditor from './MarkdownCell/MarkdownEditor'
 
 const App = () => {
 	return (
 		<div>
-			<CodeCell />
+			{/* <CodeCell /> */}
+			<MarkdownEditor />
 		</div>
 	)
 }

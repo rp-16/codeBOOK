@@ -12,18 +12,27 @@ const bundler = async (code: string) => {
 		})
 	}
 
-	const result = await service.build({
-		entryPoints: ['index.js'],
-		bundle: true,
-		write: false,
-		plugins: [unpkgPathPlugin(), fetchPlugin(code)],
-		define: {
-			'process.env.NODE_ENV': '"production"',
-			global: 'window',
-		},
-	})
-
-	return result.outputFiles[0].text
+	try {
+		const result = await service.build({
+			entryPoints: ['index.js'],
+			bundle: true,
+			write: false,
+			plugins: [unpkgPathPlugin(), fetchPlugin(code)],
+			define: {
+				'process.env.NODE_ENV': '"production"',
+				global: 'window',
+			},
+		})
+		return {
+			code: result.outputFiles[0].text,
+			error: '',
+		}
+	} catch (error) {
+		return {
+			code: '',
+			error: (error as any).message as string,
+		}
+	}
 }
 
 export default bundler
