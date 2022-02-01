@@ -1,11 +1,10 @@
 // import CodeCell from './CodeCell/CodeCell'
-import MarkdownEditor from './MarkdownCell/MarkdownEditor'
+import CellList from './CellList/CellList'
 
 const App = () => {
 	return (
 		<div>
-			{/* <CodeCell /> */}
-			<MarkdownEditor />
+			<CellList />
 		</div>
 	)
 }

@@ -4,9 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-Dockerfile
-.dockerignore
-version-manager.txt
 
 # testing
 /coverage

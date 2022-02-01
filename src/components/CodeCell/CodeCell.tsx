@@ -1,41 +1,43 @@
 import { useEffect, useState } from 'react'
-import Editor from './CodeEditor'
-import Preview from './Preview'
+import CodeEditor from './CodeEditor'
+import Preview, { PreviewText } from './Preview'
 import Resizable from '../Resizable'
 import bundler from '../../utils/bundler/bundler'
+import { useActions } from '../../hooks/useActions'
+import { Cell } from '../../store/types'
 
-export interface PreviewOutput {
-	code: string
-	error: string
+interface CodeCellProps {
+	cell: Cell
 }
 
-const CodeCell = () => {
-	const [input, setInput] = useState('')
-	const [previewInput, setPreviewInput] = useState<PreviewOutput>({ code: '', error: '' })
+const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
+	const [previewInput, setPreviewInput] = useState<PreviewText>({ code: '', error: '' })
+
+	const { updateCell } = useActions()
 
 	useEffect(() => {
 		const timer = setTimeout(async () => {
-			const bundlerOutput = await bundler(input)
+			const bundlerOutput = await bundler(cell.content)
 			console.log(bundlerOutput)
-			setPreviewInput(bundlerOutput as PreviewOutput)
+			setPreviewInput(bundlerOutput as PreviewText)
 		}, 1000)
 
 		return () => {
 			clearTimeout(timer)
 		}
-	}, [input])
+	}, [cell.content])
 
 	return (
 		<Resizable direction="vertical">
 			<div style={{ height: '100%', display: 'flex', flexDirection: 'row' }}>
 				<Resizable direction="horizontal">
-					<Editor
-						initialValue="const welcome = 'Hello World';"
-						onChangeHandler={(val) => setInput(val as string)}
+					<CodeEditor
+						initialValue={cell.content || 'const welcome = "Hello World";'}
+						onChangeHandler={(val) => updateCell(cell.id, val as string)}
 					/>
 				</Resizable>
 				{/* <button onClick={submitHandler}>Submit</button> */}
-				<Preview output={previewInput} />
+				<Preview text={previewInput} />
 			</div>
 		</Resizable>
 	)

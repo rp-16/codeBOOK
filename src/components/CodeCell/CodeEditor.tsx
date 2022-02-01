@@ -4,12 +4,12 @@ import prettier from 'prettier'
 import parser from 'prettier/parser-babel'
 import './CodeEditor.css'
 
-interface EditorProps {
+interface CodeEditorProps {
 	initialValue: string
 	onChangeHandler: OnChange
 }
 
-const Editor: React.FC<EditorProps> = (props) => {
+const CodeEditor: React.FC<CodeEditorProps> = (props) => {
 	const editorRef = useRef<any>()
 
 	const onMountHandler: OnMount = (editor) => {
@@ -34,7 +34,7 @@ const Editor: React.FC<EditorProps> = (props) => {
 	}
 
 	return (
-		<div className="Editor">
+		<div className="CodeEditor">
 			<button className="button button-format is-primary is-small" onClick={formatHandler}>
 				Format
 			</button>
@@ -63,4 +63,4 @@ const Editor: React.FC<EditorProps> = (props) => {
 	)
 }
 
-export default Editor
+export default CodeEditor

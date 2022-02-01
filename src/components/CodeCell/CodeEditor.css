@@ -1,10 +1,10 @@
-.Editor {
+.CodeEditor {
 	position: relative;
 	height: 100%;
 	width: calc(100% - 10px);
 }
 
-.Editor .button-format {
+.CodeEditor .button-format {
 	position: absolute;
 	top: 5px;
 	right: 5px;
@@ -13,6 +13,6 @@
 	transition: opacity 0.3s;
 }
 
-.Editor:hover .button-format {
+.CodeEditor:hover .button-format {
 	opacity: 1;
 }

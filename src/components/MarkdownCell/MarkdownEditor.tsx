@@ -1,11 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import MDEditor from '@uiw/react-md-editor'
 import './MarkdownEditor.css'
+import { useActions } from '../../hooks/useActions'
+import { Cell } from '../../store/types'
 
-const MarkdownEditor: React.FC = () => {
-	const [input, setInput] = useState('# Hello World!')
+interface MarkdownEditorProps {
+	cell: Cell
+}
+
+const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ cell }) => {
 	const [isEditing, setIsEditing] = useState(false)
 	const editorRef = useRef<HTMLDivElement | null>(null)
+
+	const { updateCell } = useActions()
 
 	useEffect(() => {
 		const listener = (event: MouseEvent) => {
@@ -25,22 +32,17 @@ const MarkdownEditor: React.FC = () => {
 		setIsEditing((prevState) => !prevState)
 	}
 
-	const inputChangedHandler = (value: string | undefined) => {
-		console.log(value)
-		setInput(value!)
-	}
-
 	return (
 		<>
 			{isEditing && (
 				<div className="MarkdownEditor" ref={editorRef}>
-					<MDEditor value={input} onChange={inputChangedHandler} />
+					<MDEditor value={cell.content} onChange={(val) => updateCell(cell.id, val || '')} />
 				</div>
 			)}
 			{!isEditing && (
 				<div className="MarkdownEditor card" onClick={modeToggleHandler}>
 					<div className="card-content">
-						<MDEditor.Markdown source={input} />
+						<MDEditor.Markdown source={cell.content || '## Click to edit!'} />
 					</div>
 				</div>
 			)}
