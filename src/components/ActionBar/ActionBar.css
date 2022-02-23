@@ -1,0 +1,15 @@
+.ActionBar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	opacity: 0.2;
+	transition: opacity 0.3s ease-out;
+}
+
+.ActionBar:hover {
+	opacity: 1;
+}
+
+.ActionBar .button {
+	padding: min(5px, calc(0.5em - 1px)) min(7px, calc(0.75em - 1px));
+}

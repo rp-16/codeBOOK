@@ -1,0 +1,41 @@
+.AddCell {
+	position: relative;
+	opacity: 0;
+	transition: opacity 0.3s ease-in 0.15s;
+	margin: 8px 0;
+}
+
+.AddCell:hover {
+	opacity: 1;
+}
+
+.AddCell.force-visible {
+	opacity: 1;
+}
+
+.AddCell .divider {
+	position: absolute;
+	border-bottom: 1px solid gray;
+	top: 50%;
+	left: 2.5%;
+	right: 2.5%;
+	width: 95%;
+	z-index: -1;
+}
+
+.AddCell .add-buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.AddCell .add-buttons button {
+	display: flex;
+	align-items: center;
+	margin: 0 30px;
+}
+
+.AddCell .add-buttons button .text {
+	letter-spacing: 1px;
+	font-size: 1.1em;
+}

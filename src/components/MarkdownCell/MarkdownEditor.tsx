@@ -42,7 +42,7 @@ const MarkdownEditor: React.FC<MarkdownEditorProps> = ({ cell }) => {
 			{!isEditing && (
 				<div className="MarkdownEditor card" onClick={modeToggleHandler}>
 					<div className="card-content">
-						<MDEditor.Markdown source={cell.content || '## Click to edit!'} />
+						<MDEditor.Markdown source={cell.content || '### Click to edit!'} />
 					</div>
 				</div>
 			)}
