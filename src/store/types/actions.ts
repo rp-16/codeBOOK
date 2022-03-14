@@ -22,12 +22,12 @@ export interface MoveCellAction {
 	}
 }
 
-export interface InsertCellBeforeAction {
-	type: ActionTypes.INSERT_CELL_BEFORE
+export interface InsertCellAfterAction {
+	type: ActionTypes.INSERT_CELL_AFTER
 	payload: {
 		cellId: string | null // to insert cell at very end
 		cellType: CellTypes
 	}
 }
 
-export type Actions = UpdateCellAction | DeleteCellAction | MoveCellAction | InsertCellBeforeAction
+export type Actions = UpdateCellAction | DeleteCellAction | MoveCellAction | InsertCellAfterAction

@@ -6,14 +6,14 @@ import { ActionTypes } from './types/actionProps'
 export const store = createStore(rootReducer, {}, applyMiddleware(thunk))
 
 store.dispatch({
-	type: ActionTypes.INSERT_CELL_BEFORE,
+	type: ActionTypes.INSERT_CELL_AFTER,
 	payload: {
 		cellId: null,
 		cellType: 'code',
 	},
 })
 store.dispatch({
-	type: ActionTypes.INSERT_CELL_BEFORE,
+	type: ActionTypes.INSERT_CELL_AFTER,
 	payload: {
 		cellId: null,
 		cellType: 'markdown',
@@ -21,7 +21,7 @@ store.dispatch({
 })
 
 store.dispatch({
-	type: ActionTypes.INSERT_CELL_BEFORE,
+	type: ActionTypes.INSERT_CELL_AFTER,
 	payload: {
 		cellId: null,
 		cellType: 'code',
@@ -29,7 +29,7 @@ store.dispatch({
 })
 
 store.dispatch({
-	type: ActionTypes.INSERT_CELL_BEFORE,
+	type: ActionTypes.INSERT_CELL_AFTER,
 	payload: {
 		cellId: null,
 		cellType: 'markdown',

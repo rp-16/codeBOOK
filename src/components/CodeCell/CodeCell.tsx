@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import CodeEditor from './CodeEditor'
 import Preview, { PreviewText } from './Preview'
-import Resizable from '../Resizable'
+import Resizable from '../UI/Resizable'
 import bundler from '../../utils/bundler/bundler'
 import { useActions } from '../../hooks/useActions'
 import { Cell } from '../../store/types'
