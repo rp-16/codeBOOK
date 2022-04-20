@@ -1,4 +1,4 @@
-import { ActionTypes } from './actionProps'
+import { ActionTypes } from './actionTypes'
 import { CellMoveDirection, CellTypes } from './cell'
 
 export interface UpdateCellAction {
@@ -25,9 +25,33 @@ export interface MoveCellAction {
 export interface InsertCellAfterAction {
 	type: ActionTypes.INSERT_CELL_AFTER
 	payload: {
-		cellId: string | null // to insert cell at very end
+		cellId: string | null
 		cellType: CellTypes
 	}
 }
 
-export type Actions = UpdateCellAction | DeleteCellAction | MoveCellAction | InsertCellAfterAction
+export interface BundleStartAction {
+	type: ActionTypes.BUNDLE_START
+	payload: {
+		cellId: string
+	}
+}
+
+export interface BundleCompleteAction {
+	type: ActionTypes.BUNDLE_COMPLETE
+	payload: {
+		cellId: string
+		output: {
+			code: string
+			error: string
+		}
+	}
+}
+
+export type Actions =
+	| UpdateCellAction
+	| DeleteCellAction
+	| MoveCellAction
+	| InsertCellAfterAction
+	| BundleStartAction
+	| BundleCompleteAction

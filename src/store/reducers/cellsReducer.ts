@@ -14,12 +14,14 @@ const cellsReducer: Reducer<CellState, Actions> = produce((state = initialState,
 		case ActionTypes.UPDATE_CELL: {
 			const { cellId, content } = action.payload
 			state.data[cellId].content = content
-			return state
+			break
+			// return state
 		}
 
 		case ActionTypes.DELETE_CELL: {
 			state.order = state.order.filter((id) => id !== action.payload)
-			return state
+			break
+			// return state
 		}
 
 		case ActionTypes.MOVE_CELL: {
@@ -28,13 +30,15 @@ const cellsReducer: Reducer<CellState, Actions> = produce((state = initialState,
 			const targetIdx = direction === 'up' ? idx - 1 : idx + 1
 
 			if (targetIdx < 0 || targetIdx > state.order.length - 1) {
-				return state
+				break
+				// return state
 			}
 
 			state.order[idx] = state.order[targetIdx]
 			state.order[targetIdx] = cellId
 
-			return state
+			break
+			// return state
 		}
 
 		case ActionTypes.INSERT_CELL_AFTER: {
@@ -52,8 +56,8 @@ const cellsReducer: Reducer<CellState, Actions> = produce((state = initialState,
 			} else {
 				state.order.splice(idx + 1, 0, newCell.id)
 			}
-
-			return state
+			break
+			// return state
 		}
 
 		default:

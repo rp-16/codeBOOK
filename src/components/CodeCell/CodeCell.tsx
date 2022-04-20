@@ -1,42 +1,59 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import CodeEditor from './CodeEditor'
-import Preview, { PreviewText } from './Preview'
+import Preview from './Preview'
 import Resizable from '../UI/Resizable'
-import bundler from '../../utils/bundler/bundler'
 import { useActions } from '../../hooks/useActions'
 import { Cell } from '../../store/types'
+import { useTypedSelector } from '../../hooks/useTypedSelector'
+import './CodeCell.css'
 
 interface CodeCellProps {
 	cell: Cell
 }
 
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
-	const [previewInput, setPreviewInput] = useState<PreviewText>({ code: '', error: '' })
-
-	const { updateCell } = useActions()
+	const { updateCell, createBundle } = useActions()
+	const bundle = useTypedSelector((state) => state.bundles[cell.id])
 
 	useEffect(() => {
-		const timer = setTimeout(async () => {
-			const bundlerOutput = await bundler(cell.content)
-			console.log(bundlerOutput)
-			setPreviewInput(bundlerOutput as PreviewText)
+		if (!bundle) {
+			createBundle(cell.id, cell.content)
+			return
+		}
+
+		const timer = setTimeout(() => {
+			createBundle(cell.id, cell.content)
 		}, 1000)
 
 		return () => {
 			clearTimeout(timer)
 		}
-	}, [cell.content])
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [cell.id, cell.content, createBundle])
+
+	let preview: JSX.Element
+	if (!bundle || bundle.bundling) {
+		preview = (
+			<div className="progress-bar">
+				<progress className="progress is-primary is-small" max="100">
+					Loading...
+				</progress>
+			</div>
+		)
+	} else {
+		preview = <Preview outputObject={{ code: bundle.code, error: bundle.error }} />
+	}
 
 	return (
 		<Resizable direction="vertical">
-			<div style={{ height: 'calc(100% - 10px)', display: 'flex', flexDirection: 'row' }}>
+			<div className="CodeCell">
 				<Resizable direction="horizontal">
 					<CodeEditor
 						initialValue={cell.content || 'const welcome = "Hello World";'}
 						onChangeHandler={(val) => updateCell(cell.id, val as string)}
 					/>
 				</Resizable>
-				<Preview text={previewInput} />
+				<div className="background">{preview}</div>
 			</div>
 		</Resizable>
 	)

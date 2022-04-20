@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import { editor } from 'monaco-editor'
 import MonacoEditor, { OnChange, OnMount } from '@monaco-editor/react'
 import prettier from 'prettier'
 import parser from 'prettier/parser-babel'
@@ -10,15 +11,19 @@ interface CodeEditorProps {
 }
 
 const CodeEditor: React.FC<CodeEditorProps> = (props) => {
-	const editorRef = useRef<any>()
+	const editorRef = useRef<editor.IStandaloneCodeEditor>()
+	const [initialValue, setInitialValue] = useState(props.initialValue)
 
 	const onMountHandler: OnMount = (editor) => {
 		editorRef.current = editor
+		editor.onDidFocusEditorText(() => {
+			setInitialValue('')
+		})
 	}
 
 	const formatHandler = () => {
 		// get current code from editor
-		const currentCode = editorRef.current.getValue()
+		const currentCode = editorRef.current!.getValue()
 
 		// format the code
 		const formattedCode = prettier
@@ -30,9 +35,9 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
 			.replace(/\n$/, '')
 
 		// put formatted code back into the editor
-		editorRef.current.setValue(formattedCode)
+		editorRef.current!.setValue(formattedCode)
 	}
-
+	// console.log(editorRef.current)
 	return (
 		<div className="CodeEditor">
 			<button className="button button-format is-primary is-small" onClick={formatHandler}>
@@ -41,7 +46,7 @@ const CodeEditor: React.FC<CodeEditorProps> = (props) => {
 			<MonacoEditor
 				theme="vs-dark"
 				language="javascript"
-				value={props.initialValue}
+				value={initialValue}
 				onChange={props.onChangeHandler}
 				onMount={onMountHandler}
 				height="100%"

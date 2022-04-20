@@ -1,16 +1,16 @@
 import { useEffect, useRef } from 'react'
 import './Preview.css'
 
-export interface PreviewText {
+/*export*/ interface PreviewOutput {
 	code: string
 	error: string
 }
 
 interface PreviewProps {
-	text: PreviewText
+	outputObject: PreviewOutput
 }
 
-const Preview: React.FC<PreviewProps> = ({ text }) => {
+const Preview: React.FC<PreviewProps> = ({ outputObject }) => {
 	const iframeRef = useRef<any>()
 
 	const html = `
@@ -51,9 +51,9 @@ const Preview: React.FC<PreviewProps> = ({ text }) => {
 	useEffect(() => {
 		iframeRef.current.srcdoc = html
 		setTimeout(() => {
-			iframeRef.current.contentWindow.postMessage(text, '*')
+			iframeRef.current.contentWindow.postMessage(outputObject, '*')
 		}, 50)
-	}, [html, text])
+	}, [html, outputObject])
 
 	return (
 		<div className="Preview">
