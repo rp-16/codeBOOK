@@ -14,22 +14,40 @@ interface CodeCellProps {
 const CodeCell: React.FC<CodeCellProps> = ({ cell }) => {
 	const { updateCell, createBundle } = useActions()
 	const bundle = useTypedSelector((state) => state.bundles[cell.id])
+	const cumulativeCode = useTypedSelector((state) => {
+		const { data, order } = state.cells
+		const orderedCells = order.map((id) => data[id])
+
+		const cumulativeCode = []
+		for (let c of orderedCells) {
+			if (c.type === 'code') {
+				cumulativeCode.push(c.content)
+			}
+			if (c.id === cell.id) {
+				break
+			}
+		}
+
+		return cumulativeCode.join('\n')
+	})
+
+	console.log(cumulativeCode)
 
 	useEffect(() => {
 		if (!bundle) {
-			createBundle(cell.id, cell.content)
+			createBundle(cell.id, cumulativeCode)
 			return
 		}
 
 		const timer = setTimeout(() => {
-			createBundle(cell.id, cell.content)
+			createBundle(cell.id, cumulativeCode)
 		}, 1000)
 
 		return () => {
 			clearTimeout(timer)
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [cell.id, cell.content, createBundle])
+	}, [cell.id, cumulativeCode, createBundle])
 
 	let preview: JSX.Element
 	if (!bundle || bundle.bundling) {

@@ -51,7 +51,7 @@ const Preview: React.FC<PreviewProps> = ({ outputObject }) => {
 	useEffect(() => {
 		iframeRef.current.srcdoc = html
 		setTimeout(() => {
-			iframeRef.current.contentWindow.postMessage(outputObject, '*')
+			iframeRef.current?.contentWindow.postMessage(outputObject, '*')
 		}, 50)
 	}, [html, outputObject])
 
